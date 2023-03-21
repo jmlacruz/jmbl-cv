@@ -19,44 +19,26 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Yarn Install
-      run: yarn install
-
-    - name: Yarn Build
-      run: yarn build
-
-    - name: Share artifact inside workflow
-      uses: actions/upload-artifact@v3
-      with:
-        name: build-artifact
-        path: ./out
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      # get build artifact
-      - name: Get artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-artifact
-
-      - name: Configure AWS credentials
+    - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
-      # Copy build to s3
-      - name: Deploy to S3
-        run: |
-          S3_BUCKET=s3://jmbl-cv-2023
-          aws s3 sync . $S3_BUCKET --acl private
-        working-directory: build-artifact
+    - name: Yarn Install
+      run: yarn install
 
-      - name: Create Cloudfront Invalidation
-        run: |
-          DISTRIBUTION_ID=E19KBIZFPG78PP
-          aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths /*
-        working-directory: build-artifact
+    - name: Yarn Build
+      run: yarn build
+
+      # Copy build to s3
+    - name: Deploy to S3
+      run: |
+        S3_BUCKET=s3://jmbl-cv-2023
+        aws s3 sync . $S3_BUCKET --acl private
+
+    - name: Create Cloudfront Invalidation
+      run: |
+        DISTRIBUTION_ID=E19KBIZFPG78PP
+        aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths /*
