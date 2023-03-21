@@ -18,12 +18,13 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+        cache: 'npm'
 
     - name: Yarn Install
       run: yarn install
 
     - name: Yarn Build
-      run: yarn build
+      run: npm run build
 
     - name: Share artifact inside workflow
       uses: actions/upload-artifact@v1
