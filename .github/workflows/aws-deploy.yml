@@ -24,17 +24,17 @@ jobs:
       run: yarn install
 
     - name: Yarn Build
-      run: npm run build
+      run: yarn build
 
     - name: Share artifact inside workflow
       uses: actions/upload-artifact@v1
       with:
         name: build-artifact
-        path: build
+        path: out
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: out
     steps:
       # get build artifact
       - name: Get artifact
