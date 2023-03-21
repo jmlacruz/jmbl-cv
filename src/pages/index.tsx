@@ -66,7 +66,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              JMBL
+              JMBL ABC
             </h2>
             <p className={inter.className}>
               Find in-depth information about Next.js features and&nbsp;API.
