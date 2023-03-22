@@ -36,7 +36,7 @@ jobs:
     - name: Deploy to S3
       run: |
         S3_BUCKET=s3://jmbl-cv-2023
-        aws s3 sync . $S3_BUCKET --acl private
+        aws s3 sync ./out $S3_BUCKET --acl private
 
     - name: Create Cloudfront Invalidation
       run: |
