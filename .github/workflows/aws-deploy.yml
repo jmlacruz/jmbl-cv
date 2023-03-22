@@ -32,7 +32,6 @@ jobs:
     - name: Yarn Build
       run: yarn build
 
-      # Copy build to s3
     - name: Deploy to S3
       run: |
         S3_BUCKET=s3://jmbl-cv-2023
