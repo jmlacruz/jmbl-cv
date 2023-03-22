@@ -32,6 +32,11 @@ jobs:
     - name: Yarn Build
       run: yarn build
 
+    # - name: Deploy to S3
+    #   run: |
+    #     S3_BUCKET=s3://jmbl-cv-2023
+    #     aws s3 sync ./out $S3_BUCKET --delete
+
     - name: S3 Deploy
       uses: lbertenasco/s3-deploy@v1
       with:
@@ -39,7 +44,4 @@ jobs:
         bucket: S3_BUCKET=s3://jmbl-cv-2023
         dist-id: E19KBIZFPG78PP
         invalidation: /*
-    # - name: Deploy to S3
-    #   run: |
-    #     S3_BUCKET=s3://jmbl-cv-2023
-    #     aws s3 sync ./out $S3_BUCKET --delete
+
