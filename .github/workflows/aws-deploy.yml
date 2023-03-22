@@ -33,7 +33,7 @@ jobs:
       run: yarn build
 
     - name: S3 Deploy
-      user: lbertenasco/se-deploy@1
+      uses: lbertenasco/se-deploy@1
       with:
         folder: ./out
         bucket: S3_BUCKET=s3://jmbl-cv-2023
